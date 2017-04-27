@@ -1,0 +1,70 @@
+/*
+ * 通用样式
+ * 
+ * */
+
+body {
+  background-color: #eef1f6;
+}
+* {
+  word-break: break-all;
+  word-wrap: break-word;
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+/* 用户头像默认的背景头像 */
+.avatar {
+  background-image: url(../avatar-default.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+/* 文字溢出的处理方式 */
+.nowrap {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nowrap-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/*滚动条样式*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  border: 0;
+  background: #424f63;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #65cea7;
+    border: 0;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-track-piece {
+    width: 6px;
+    background: #424f63;
+    border: 0;
+    border-radius: 3px;
+}
+/*重置框架表格部分样式*/
+.el-table .cell {
+  line-height: 20px;
+  font-size: 13px;
+}
+.el-table .cell, .el-table th>div {
+  padding: 5px 10px;
+}

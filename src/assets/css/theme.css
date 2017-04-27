@@ -1,0 +1,14 @@
+/*
+ * 
+ * 管理系统的主题颜色
+ * 
+ * */
+
+.theme-color {
+  color: rgb(72,157,103);
+}
+
+.theme-bg {
+  background-color: rgb(50,65,87);
+}
+
