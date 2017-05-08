@@ -4,48 +4,186 @@
  * */
 
 body {
-  background-color: #eef1f6;
+    background-color: #eef1f6;
+    background-color: #fff;
 }
+
 * {
-  word-break: break-all;
-  word-wrap: break-word;
-  padding: 0;
-  margin: 0;
-  outline: 0;
-  -webkit-tap-highlight-color: transparent;
-  box-sizing: border-box;
+    word-break: break-all;
+    word-wrap: break-word;
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
 }
+
+li {
+    list-style: none;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.margin-r-5 {
+    margin-right: 5px;
+}
+
+.margin-r-10 {
+    margin-right: 10px;
+}
+
+.margin-r-15 {
+    margin-right: 15px;
+}
+
+.margin-l-5 {
+    margin-left: 5px;
+}
+
+.margin-l-10 {
+    margin-left: 10px;
+}
+
+.margin-l-15 {
+    margin-left: 15px;
+}
+
+.margin-t-5 {
+    margin-top: 5px;
+}
+
+.margin-t-10 {
+    margin-top: 10px;
+}
+
+.margin-t-15 {
+    margin-top: 15px;
+}
+
+.margin-b-5 {
+    margin-bottom: 5px;
+}
+
+.margin-b-10 {
+    margin-bottom: 10px;
+}
+
+.margin-b-15 {
+    margin-bottom: 15px;
+}
+
+/*padding*/
+.padding-r-5 {
+    margin-right: 5px;
+}
+
+.padding-r-10 {
+    margin-right: 10px;
+}
+
+.padding-r-15 {
+    margin-right: 15px;
+}
+
+.padding-l-5 {
+    margin-left: 5px;
+}
+
+.padding-l-10 {
+    margin-left: 10px;
+}
+
+.padding-l-15 {
+    margin-left: 15px;
+}
+
+.padding-t-5 {
+    margin-top: 5px;
+}
+
+.padding-t-10 {
+    margin-top: 10px;
+}
+
+.padding-t-15 {
+    margin-top: 15px;
+}
+
+.padding-b-5 {
+    margin-bottom: 5px;
+}
+
+.padding-b-10 {
+    margin-bottom: 10px;
+}
+
+.padding-b-15 {
+    margin-bottom: 15px;
+}
+
+.font12 {font-size: 12px;}
+.font13 {font-size: 13px;}
+.font14 {font-size: 14px;}
+.font16 {font-size: 16px;}
+.font18 {font-size: 18px;}
+.font20 {font-size: 20px;}
+.font22 {font-size: 22px;}
+.font24 {font-size: 24px;}
+.font25 {font-size: 25px;}
+.font26 {font-size: 26px;}
+.font28 {font-size: 28px;}
+.font30 {font-size: 30px;}
+
+.line-h-1 {
+    line-height: 1;
+}
+
+.text-center {text-align: center;}
+.text-right {text-align: right;}
+.text-justify {text-align: justify;}
+
+.txt-info {color: #777777;}
+.txt-muted {color: #bbb;}
+
 
 /* 用户头像默认的背景头像 */
+
 .avatar {
-  background-image: url(../avatar-default.png);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
+    background-image: url(../avatar-default.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
 }
+
 
 /* 文字溢出的处理方式 */
+
 .nowrap {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.nowrap-2 {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
+.nowrap-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+
 /*滚动条样式*/
+
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  border: 0;
-  background: #424f63;
-  border-radius: 3px;
+    width: 6px;
+    height: 6px;
+    border: 0;
+    background: #424f63;
+    border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -60,11 +198,35 @@ body {
     border: 0;
     border-radius: 3px;
 }
+
+
 /*重置框架表格部分样式*/
+
 .el-table .cell {
-  line-height: 20px;
-  font-size: 13px;
+    line-height: 20px;
+    font-size: 13px;
 }
-.el-table .cell, .el-table th>div {
-  padding: 5px 10px;
+
+.el-table .cell,
+.el-table th>div {
+    padding: 10px 6px;
+}
+
+/*page页面公共头部*/
+.page-comon-header {
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: rgb(243,243,243);
+}
+
+.page-search-bar {
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #fff;
 }

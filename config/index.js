@@ -6,6 +6,7 @@ module.exports = {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
+//  assetsRoot: '/Users/enjing/Documents/node/trace-source-node/dist',
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: true,

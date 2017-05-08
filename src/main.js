@@ -16,13 +16,7 @@ new Vue({
 	el: '#app',
   store,
   router,
-  template: '<App/>',
-  components: { App }
+  render: h => h(App)
+//template: '<App/>',
+//components: { App }
 })
-
-//console.log(store.state)
-//if (store.state.userLogin === true) {
-//router.push('/');
-//} else {
-//router.push('/login');
-//}

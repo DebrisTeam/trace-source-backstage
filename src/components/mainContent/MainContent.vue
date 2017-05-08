@@ -2,8 +2,8 @@
   <div class="main-content">
     
     <main-header></main-header>
-      <slot></slot>
-    <main-footer></main-footer>
+    <slot></slot>
+    <!--<main-footer></main-footer>-->
     
   </div>
 </template>
@@ -21,9 +21,9 @@
 <style>
   .main-content {
     position: relative;
-    margin-left: 220px;
-    padding-top: 60px;
-    padding-bottom: 40px; 
+    margin-left: 200px;
+    padding-top: 64px;
+    /*padding-bottom: 40px;*/ 
     min-height: 100vh;
   }
   .main-card {
