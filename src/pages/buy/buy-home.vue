@@ -47,48 +47,89 @@
             :data="tableData" stripe style="width: 100%">
             <el-table-column
                 type="selection"
+                align="center"
                 width="55">
             </el-table-column>
             <el-table-column
                 prop="num"
+                align="center"
                 label="编号">
             </el-table-column>
             <el-table-column
                 prop="product"
+                align="center"
                 label="种类">
             </el-table-column>
             <el-table-column
                 prop="number"
+                width="130"
+                align="center"
                 label="数量">
+                <template scope="scope">
+                    <el-input-number
+                        v-show="editActive===scope.$index"
+                        v-model="changeNumber"
+                        :min="1" size="small" 
+                        style="width: 120px;">
+                    </el-input-number>
+                    <span v-show="editActive!==scope.$index">{{scope.row.number}}</span>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="money"
+                align="center"
                 label="价格">
             </el-table-column>
             <el-table-column
                 prop="farmer"
+                align="center"
                 label="农户">
             </el-table-column>
             <el-table-column
                 prop="date"
+                width="135"
+                align="center"
                 label="收购时间">
+                <template scope="scope">
+                    <el-date-picker
+                        v-show="editActive===scope.$index"
+                        v-model="changeDate"
+                        @change="changeDateFn"
+                        type="date"
+                        size="small"
+                        style="width: 125px;"
+                        placeholder="选择日期">
+                    </el-date-picker>
+                    <span v-show="editActive!==scope.$index">{{scope.row.date}}</span>
+                </template>
             </el-table-column>
             <el-table-column
                 prop="action"
+                align="center"
                 label="操作">
                 <template scope="scope">
-                    <el-button
-                        size="small"
-                        :plain="true"
-                        type="primary"
-                        style="margin-left: 0;" 
-                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button
-                        size="small"
-                        :plain="true"
-                        type="danger"
-                        style="margin-left: 0;"
-                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <div v-show="editActive===scope.$index">
+                        <el-button
+                            size="small"
+                            type="success"
+                            style="margin-left: 0;" 
+                            @click="handleEditSuccess(scope.$index, scope.row)">完成</el-button>
+                    </div>
+                    <div v-show="editActive!==scope.$index">
+                        <el-button
+                            size="small"
+                            :plain="true"
+                            type="primary"
+                            style="margin-left: 0;" 
+                            @click="handleEdit(scope.$index, scope)">编辑</el-button>
+                        <el-button
+                            size="small"
+                            :plain="true"
+                            type="danger"
+                            style="margin-left: 0;"
+                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    </div>
+                    
                 </template>
             </el-table-column>
         </el-table>
@@ -160,6 +201,11 @@ export default {
                 farmer: '陈达',
                 date: '2017-6-12',
             }],
+            
+            editActive: null,
+            
+            changeDate: '',
+            changeNumber: '',
         }
     },
     
@@ -173,11 +219,25 @@ export default {
         handleIconClick() {
             
         },
-        handleDetail(index, row) {
-            this.$router.push('/village/detail')
+        
+        changeDateFn(value) {
+            this.changeDate = value;
         },
+        
         handleEdit(index, row) {
-            this.$router.push('/village/edit')
+            // 编辑之前先清空保存日期和数量的变量
+            this.changeDate = '';
+            this.changeNumber = '';
+            
+            this.editActive = index;
+        },
+        handleEditSuccess(index, row) {
+            this.editActive = null;
+            console.log(this.changeDate ,this.changeNumber)
+            
+            // 完成编辑之后再清空保存日期和数量的变量
+            this.changeDate = '';
+            this.changeNumber = '';
         }
     }
 }

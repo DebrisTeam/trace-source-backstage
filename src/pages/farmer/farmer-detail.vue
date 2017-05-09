@@ -7,7 +7,7 @@
                     <router-link to="/farmer/edit">
                         <el-button type="primary" class="back-btn">编辑</el-button>
                     </router-link>
-                    <router-link to="/village">
+                    <router-link to="/farmer">
                         <el-button class="back-btn">返回</el-button>
                     </router-link>
                 </div>

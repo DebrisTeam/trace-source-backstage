@@ -11,7 +11,7 @@
                 <el-steps
                     :space="200"
                     :active="1"
-                    center="true"
+                    :center="true"
                     finish-status="finish">
                 <el-step title="选择村民"></el-step>
                 <el-step title="选择农产品"></el-step>
