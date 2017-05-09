@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="margin-t-15" style="padding: 20px 15px;">
+    <div style="min-height: calc(100vh - 64px);background-color: #eef1f6;padding-bottom: 1px;">
+        <div class="" style="padding: 20px 15px;">
             <div style="font-size: 18px;">数据总览</div>
             <el-row :gutter="20" class="margin-t-15">
               <el-col :span="6"><div class="grid-content">

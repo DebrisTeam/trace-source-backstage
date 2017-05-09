@@ -11,34 +11,40 @@
             <div class="right">
                 <div class="right-item text-center">
                     <span class="font28 padding-b-10">23456</span>
-                    <p class="font14 txt-info">村庄数量</p>
+                    <p class="font14 txt-info">收购记录</p>
                 </div>
             </div>
         </div>
         
         <div class="page-search-bar">
             <div class="left">
-                <label class="font14 margin-r-5">搜索村民</label>
-                <el-input
-                    placeholder="输入关键词"
-                    icon="search"
-                    v-model="input2"
-                    :on-icon-click="handleIconClick">
-                </el-input>
+                <div class="left-search">
+                    <label class="font14 txt-info">搜索收购记录:</label>
+                    <el-input
+                        style="width: 160px; display: block; margin-top: 5px;"
+                        placeholder="输入关键词"
+                        icon="search"
+                        v-model="input2"
+                        :on-icon-click="handleIconClick">
+                    </el-input>
+                </div>
+                <div class="right-search margin-l-15">
+                    <label class="font14 txt-info">按时间段搜索:</label>
+                    <el-date-picker
+                        style="display: block; margin-top: 5px;"
+                        v-model="searchDate"
+                        type="daterange"
+                        placeholder="选择日期范围">
+                    </el-date-picker>
+                </div>
+                
             </div>
             <div class="right">
                 <el-badge :value="10" :max="99" class="margin-r-15">
                     <el-button
-                        :plain="true"
-                        type="danger"
-                        @click="handleDelete">批量删除</el-button>
+                        type="primary"
+                        @click="handlePreview">批量打印预览</el-button>
                 </el-badge>
-                <router-link to="/farmer/add">
-                    <el-button
-                        class="margin-l-15"
-                        type="primary">添加村民</el-button>
-                </router-link>
-                
             </div>
         </div>
         
@@ -51,51 +57,30 @@
                 width="55">
             </el-table-column>
             <el-table-column
-                prop="name"
-                label="姓名">
+                prop="numb"
+                label="编号">
             </el-table-column>
             <el-table-column
-                prop="sex"
-                label="性别">
+                prop="product"
+                label="种类">
             </el-table-column>
             <el-table-column
-                prop="village"
-                label="所属村">
+                prop="number"
+                label="数量">
             </el-table-column>
             <el-table-column
-                prop="county"
-                label="所属县">
+                prop="money"
+                label="金额">
             </el-table-column>
             <el-table-column
-                prop="tel"
-                label="联系方式">
+                prop="farmer"
+                label="农户">
             </el-table-column>
             <el-table-column
-                prop="poor"
-                label="贫困户">
+                prop="date"
+                label="收购时间">
             </el-table-column>
-            <el-table-column
-                prop="action"
-                label="操作">
-                <template scope="scope">
-                    <el-button 
-                        size="small"
-                        :plain="true"
-                        @click="handleDetail(scope.$index, scope.row)">详情</el-button>
-                    <el-button
-                        size="small"
-                        :plain="true"
-                        type="primary"
-                        style="margin-left: 0;" 
-                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button
-                        size="small"
-                        :plain="true"
-                        type="danger"
-                        style="margin-left: 0;"
-                        @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-                </template>
-            </el-table-column>
+            
         </el-table>
         <div class="pagination-bar" style="margin-top: 15px;">
           <el-pagination
@@ -125,6 +110,9 @@ export default {
             // 表格数据
             tableData: [],
             
+            searchDate: '',
+            preview: [],
+            
             options: [{
                 value: 'guangxi',
                 label: '广西'
@@ -139,33 +127,33 @@ export default {
                 label: '广东'}],
 
             tableData: [{
-                name: '王小虎',
-                sex: '男',
-                village: '五福村',
-                county: '天峨县',
-                tel: '14989303427',
-                poor: '是',
+                numb: '201706091234',
+                product: '黄豆',
+                number: '23斤',
+                money: '130.00',
+                farmer: '陈达',
+                date: '2017-6-1',
             }, {
-                name: '王小虎',
-                sex: '男',
-                village: '五福村',
-                county: '天峨县',
-                tel: '14989303427',
-                poor: '是',
+                numb: '201706091234',
+                product: '黄豆',
+                number: '23斤',
+                money: '130.00',
+                farmer: '陈达',
+                date: '2017-6-1',
             }, {
-                name: '王小虎',
-                sex: '男',
-                village: '五福村',
-                county: '天峨县',
-                tel: '14989303427',
-                poor: '是',
+                numb: '201706091234',
+                product: '黄豆',
+                number: '23斤',
+                money: '130.00',
+                farmer: '陈达',
+                date: '2017-6-1',
             }, {
-                name: '王小虎',
-                sex: '男',
-                village: '五福村',
-                county: '天峨县',
-                tel: '14989303427',
-                poor: '是',
+                numb: '201706091234',
+                product: '黄豆',
+                number: '23斤',
+                money: '130.00',
+                farmer: '陈达',
+                date: '2017-6-1',
             }],
         }
     },
@@ -174,18 +162,15 @@ export default {
         handleCurrentChange() {
             
         },
-        handleDelete() {
-            
+        handlePreview() {
+            this.$router.push({
+                path: '/qrcode/preview'
+            });
         },
         handleIconClick() {
             
         },
-        handleDetail(index, row) {
-            this.$router.push('/farmer/detail')
-        },
-        handleEdit(index, row) {
-            this.$router.push('/farmer/edit')
-        }
+        
     }
 }
 </script>
@@ -207,8 +192,8 @@ export default {
         align-items: center;
     }
     .page-search-bar .left label {
-        width: 80px;
-    }
+        width: 120px;
+    }*/
     
     .page-search-bar .right {
         display: flex;

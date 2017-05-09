@@ -23,6 +23,9 @@ import SelectFarmer from '@/pages/buy/add/select-farmer';
 import SelectProduct from '@/pages/buy/add/select-product';
 import AddSuccess from '@/pages/buy/add/add-success';
 
+import Qrcode from '@/pages/qrcode';
+import QrcodeHome from '@/pages/qrcode/qr-home';
+import QrcodePriview from '@/pages/qrcode/preview';
 
 Vue.use(Router)
 
@@ -77,6 +80,15 @@ const routes = [
                 { path: 'add-success', component: AddSuccess }
             ]
         },
+    ]
+  },
+  {
+    path: '/qrcode',
+    name: 'qrcode',
+    component: Qrcode,
+    children: [
+        { path: '', component: QrcodeHome },
+        { path: 'preview', component: QrcodePriview },
     ]
   },
   {

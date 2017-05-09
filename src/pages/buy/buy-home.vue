@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white" style="height: calc(100vh - 64px);">
+    <div>
         <div class="page-comon-header">
             <div class="left">
                 <label class="font14 margin-r-5">筛选</label>
