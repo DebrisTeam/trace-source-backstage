@@ -140,20 +140,6 @@ export default {
                 money: '130.00',
                 farmer: '陈达',
                 date: '2017-6-1',
-            }, {
-                numb: '201706091234',
-                product: '黄豆',
-                number: '23斤',
-                money: '130.00',
-                farmer: '陈达',
-                date: '2017-6-1',
-            }, {
-                numb: '201706091234',
-                product: '黄豆',
-                number: '23斤',
-                money: '130.00',
-                farmer: '陈达',
-                date: '2017-6-1',
             }],
         }
     },

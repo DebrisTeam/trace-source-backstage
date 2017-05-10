@@ -12,7 +12,9 @@
             <el-tabs type="card" @tab-click="handleTabClick">
                 <el-tab-pane label="不干胶">
                     <div class="preview-img-wrap text-center">
-                        <div class="img-wrap">
+                        <div class="img-wrap"
+                            v-loading="loading1"
+                            element-loading-text="正在生成二维码">
                             <div class="img">
                                 <img src="" width="100%" height="100%"/>
                             </div>
@@ -24,7 +26,9 @@
                 </el-tab-pane>
                 <el-tab-pane label="脚环">
                     <div class="preview-img-wrap text-center">
-                        <div class="img-wrap">
+                        <div class="img-wrap"
+                            v-loading="loading2"
+                            element-loading-text="正在生成二维码">
                             <div class="img" style="background-color: #00AEEF;">
                                 <img src="" width="100%" height="100%"/>
                             </div>
@@ -43,7 +47,8 @@
     export default {
         data() {
             return {
-                
+                loading1: true,
+                loading2: true,
             }
         },
         

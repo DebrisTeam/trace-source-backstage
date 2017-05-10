@@ -27,6 +27,8 @@ import Qrcode from '@/pages/qrcode';
 import QrcodeHome from '@/pages/qrcode/qr-home';
 import QrcodePriview from '@/pages/qrcode/preview';
 
+
+
 Vue.use(Router)
 
 const routes = [
