@@ -6,7 +6,9 @@
                 <h1 class="logo-text">穗片农业</h1>
                 <span class="line"></span>
                 <div class="village-name">五福村</div>
-                <div class="change-village">切换到村</div>
+                <router-link to="/select-village">
+                    <div class="change-village">切换到村</div>
+                </router-link>
             </div>
             <div class="right-content">
                 <div class="margin-r-15">

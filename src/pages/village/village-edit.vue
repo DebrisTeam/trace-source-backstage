@@ -90,7 +90,8 @@
             };
         },
         created() {
-            console.log('dasd',this.$route.params)
+            console.log('dasd',this.$route.query)
+            console.log('000',this.$route.params)
         },
         
         methods: {

@@ -14,16 +14,16 @@
                     93,634
                 </div>
             </div>
-            <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="sort" label="排序">
+            <el-table :data="tableData" style="width: 100%" border>
+                <el-table-column prop="sort" label="排序" align="center" min-width="60">
                 </el-table-column>
-                <el-table-column prop="name" label="姓名">
+                <el-table-column prop="name" label="姓名" align="center" min-width="120">
                 </el-table-column>
-                <el-table-column prop="sex" label="性别">
+                <el-table-column prop="sex" label="性别" align="center" min-width="50">
                 </el-table-column>
-                <el-table-column prop="age" label="年龄">
+                <el-table-column prop="age" label="年龄" align="center" min-width="60">
                 </el-table-column>
-                <el-table-column prop="income" label="收入(元)">
+                <el-table-column prop="income" label="收入(元)" align="center" min-width="120">
                 </el-table-column>
             </el-table>
         </el-tab-pane>
@@ -42,15 +42,15 @@
                 </div>
             </div>
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="sort" label="排序">
+                <el-table-column prop="sort" label="排序" align="center" min-width="60">
                 </el-table-column>
-                <el-table-column prop="name" label="姓名">
+                <el-table-column prop="name" label="姓名" align="center" min-width="120">
                 </el-table-column>
-                <el-table-column prop="sex" label="性别">
+                <el-table-column prop="sex" label="性别" align="center" min-width="50">
                 </el-table-column>
-                <el-table-column prop="age" label="年龄">
+                <el-table-column prop="age" label="年龄" align="center" min-width="60">
                 </el-table-column>
-                <el-table-column prop="income" label="收入(元)">
+                <el-table-column prop="income" label="收入(元)" align="center" min-width="120">
                 </el-table-column>
             </el-table>
         </el-tab-pane>
@@ -101,7 +101,7 @@
 
 <style scoped="scoped">
     .income-tab {
-        width: 50%;
+        width: 60%;
     }
     .tab-info-bar {
         display: flex;

@@ -161,7 +161,8 @@ export default {
             this.$router.push('/village/detail')
         },
         handleEdit(index, row) {
-            this.$router.push({ path: '/village/edit', params: {name: 'fafadf'} })
+//          this.$router.push({ path: '/village/edit', query: row });
+            this.$router.push({ name: '/village/edit', params: row });
         }
     }
 }

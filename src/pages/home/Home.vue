@@ -1,5 +1,5 @@
 <template>
-    <div style="min-height: calc(100vh - 64px);background-color: #eef1f6;padding-bottom: 1px;">
+    <div class="home-wrap">
         <div class="" style="padding: 20px 15px;">
             <div style="font-size: 18px;">数据总览</div>
             <el-row :gutter="20" class="margin-t-15">
@@ -64,6 +64,11 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+    .home-wrap {
+        min-height: calc(100vh - 64px);
+        background-color: #eef1f6;
+        padding-bottom: 1px;
+    }
     .grid-content {
         display: flex;
         height: 80px;

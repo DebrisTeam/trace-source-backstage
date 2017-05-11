@@ -13,10 +13,11 @@
                 <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
             <el-form-item label="地理位置" prop="address">
-                <el-select v-model="ruleForm.address" placeholder="请选择地理位置">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
+                <el-cascader
+                    :options="options"
+                    @active-item-change="handleItemChange"
+                    :props="props"
+                ></el-cascader>
             </el-form-item>
             <el-form-item label="常住人口" prop="people">
                 <el-input v-model="ruleForm.people"></el-input>
@@ -59,6 +60,21 @@
                     picture: [],
                 },
                 
+                selectedOptions: '',
+                
+                options: [{
+                    label: '江苏',
+                    cities: []
+                }, {
+                    label: '浙江',
+                    cities: []
+                }],
+                
+                props: {
+                    value: 'label',
+                    children: 'cities'
+                },
+                
                 dialogImageUrl: '',
                 dialogVisible: false,
                 
@@ -78,12 +94,6 @@
                         required: true,
                         message: '请选择地理位置',
                         trigger: 'change'
-                    }],
-                    
-                    people: [{
-                        required: true,
-                        message: '请输入常驻人口',
-                        trigger: 'blur'
                     }],
                     
                 }
@@ -106,6 +116,22 @@
                     }
                 });
             },
+            
+            handleItemChange(val) {
+                console.log('active item:', val);
+                setTimeout(_ => {
+                  if (val.indexOf('江苏') > -1 && !this.options2[0].cities.length) {
+                    this.options2[0].cities = [{
+                      label: '南京'
+                    }];
+                  } else if (val.indexOf('浙江') > -1 && !this.options2[1].cities.length) {
+                    this.options2[1].cities = [{
+                      label: '杭州'
+                    }];
+                  }
+                }, 300);
+            },
+            
             resetForm(formName) {
                 this.$refs[formName].resetFields();
             },

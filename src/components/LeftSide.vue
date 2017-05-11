@@ -6,14 +6,19 @@
             <button class="admin-set">个人设置</button>
             <div class="signout-btn" @click="signout">退出登陆</div>
         </div>
-        <el-menu theme="dark" router default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+        <el-menu
+            theme="dark"
+            router
+            :default-active="activePath"
+            class="el-menu-vertical-demo" 
+            @open="handleOpen" 
+            @close="handleClose">
             <el-menu-item index="/"><i class="el-icon-message"></i>数据总览</el-menu-item>
             <el-menu-item index="/village"><i class="el-icon-menu"></i>村庄管理</el-menu-item>
             <el-menu-item index="/farmer"><i class="el-icon-setting"></i>村民管理</el-menu-item>
             <el-menu-item index="/buy"><i class="el-icon-setting"></i>收购管理</el-menu-item>
-            <!--<el-menu-item index="/sell"><i class="el-icon-setting"></i>销售管理</el-menu-item>-->
             <el-menu-item index="/qrcode"><i class="el-icon-setting"></i>二维码打印</el-menu-item>
-            <el-menu-item index="/user"><i class="el-icon-setting"></i>用户管理</el-menu-item>
+            <!--<el-menu-item index="/user"><i class="el-icon-setting"></i>用户管理</el-menu-item>-->
         </el-menu>
         </el-menu>
     </div>
@@ -22,7 +27,28 @@
 <script>
     import axios from 'axios';
     export default {
+        data() {
+            return {
+                menuData: [
+                    {
+                        
+                    }
+                ]
+            }
+        },
+        
+        computed: {
+            activePath: function () {
+                // 如果访问的是二级以后的路由也还需要侧边栏处于激活状态就需要做这样的处理
+                const pathArray = this.$route.path.split('/');
+                return `/${pathArray[1]}`;
+            }
+        },
+        
         methods: {
+            connectArray() {
+                const arr1 = ["/", "/village", "/farmer", "/buy", "/qrcode"];
+            },
             signout() {
                 axios.get('/api/login_out').then(function(response) {
                     this.$message({

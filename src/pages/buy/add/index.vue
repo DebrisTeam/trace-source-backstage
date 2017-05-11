@@ -10,7 +10,7 @@
             <div class="add-step-bar">
                 <el-steps
                     :space="200"
-                    :active="1"
+                    :active="active"
                     :center="true"
                     finish-status="finish">
                 <el-step title="选择村民"></el-step>
@@ -27,15 +27,28 @@
 
 <script>
     export default {
+        data() {
+            return {
+                
+            }
+        },
         
+        computed: {
+            active: function () {
+                const path = this.$route.path;
+                if (path === '/buy/add') {
+                    return 1;
+                } else if (path === '/buy/add/select-product') {
+                    return 2;
+                } else {
+                    return 3;
+                }
+            },
+        }
     }
 </script>
 
 <style scoped="scoped">
-    .add-buy {
-        height: calc(100vh - 64px);
-        background-color: #fff;
-    }
     .header {
         padding: 15px;
         padding-top: 30px;

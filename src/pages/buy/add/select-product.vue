@@ -97,7 +97,7 @@
         display: flex;
         justify-content: space-between;
         padding: 15px 20px;
-        border-bottom: 1px solid #ccc;
+        /*border-bottom: 1px solid #ccc;*/
     }
     .farmer-bar  .left {
         display: flex;

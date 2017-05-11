@@ -178,7 +178,7 @@ li {
 
 /*滚动条样式*/
 
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     width: 6px;
     height: 6px;
     border: 0;
@@ -197,7 +197,7 @@ li {
     background: #424f63;
     border: 0;
     border-radius: 3px;
-}
+}*/
 
 
 /*重置框架表格部分样式*/
