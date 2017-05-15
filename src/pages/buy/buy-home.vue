@@ -3,10 +3,30 @@
         <div class="page-comon-header">
             <div class="left">
                 <label class="font14 margin-r-5">筛选</label>
-                <el-cascader
-                    :options="options"
-                    :show-all-levels="false">
-                </el-cascader>
+                <el-select
+                    v-model="search.country"
+                    clearable
+                    @change="handleCountryChange"
+                    placeholder="请选择">
+                    <el-option
+                        v-for="item in countryOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-select
+                    v-model="search.village"
+                    clearable
+                    @change="handleVillageChange"
+                    placeholder="请选择">
+                    <el-option
+                        v-for="item in villageOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
             </div>
             <div class="right">
                 <div class="right-item text-center">
@@ -22,13 +42,15 @@
                 <el-input
                     placeholder="输入关键词"
                     icon="search"
-                    v-model="input2"
+                    v-model="search.buy"
+                    @change="handleBuyChange"
                     :on-icon-click="handleIconClick">
                 </el-input>
             </div>
             <div class="right">
-                <el-badge :value="10" :max="99" class="margin-r-15">
+                <el-badge :value="0" :max="99" class="margin-r-15">
                     <el-button
+                        disabled
                         :plain="true"
                         type="danger"
                         @click="handleDelete">批量删除</el-button>
@@ -133,46 +155,89 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div class="pagination-bar" style="margin-top: 15px;">
+        <div class="pagination-bar margin-t-15" v-show="pagination.total > 10">
           <el-pagination
             @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :page-size="pageSize"
+            :current-page="pagination.currentPage"
+            :page-size="pagination.pageSize"
             layout="total, prev, pager, next"
-            :total="total">
+            :total="pagination.total">
           </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            input2: '',
+            // 搜索字段
+            search: {
+                country: '',
+                village: '',
+                buy: '',
+                page: 1,
+            },
+            
             // 是否加载中
             loading: false,
-            // 当前页数
-            currentPage: 1,
-            // 每页显示条数
-            pageSize: 10,
-            // 总条数
-            total: 40,
-            
-            options: [{
-                value: 'guangxi',
-                label: '广西'
-            },{
-                value: 'shanghai',
-                label: '上海'
-            },{
-                value: 'shenzhen',
-                label: '深圳'
-            },{
-                value: 'guangdong',
-                label: '广东'}],
+
             // 表格数据
-            tableData: [{
+            tableData: [],
+            
+            // 分页器数据
+            pagination: {
+                currentPage: 1,
+                pageSize: 10,
+                total: 0,
+            },
+            // 保存县和村的列表数据
+            countryOptions: [],
+            villageOptions: [],
+            
+            // 打开编辑收购选项时切换DOM结构
+            editActive: null,
+            // 保存编辑收购选项时的日期和数量
+            changeDate: '',
+            changeNumber: '',
+        }
+    },
+    
+    created() {
+        this.getCountryData();
+        this.getBuyList();
+    },
+    
+    methods: {
+        getCountryData() {
+            this.countryOptions = [{
+                value: '选项1',
+                label: '全部县'
+            }, {
+                value: '选项2',
+                label: '天峨县'
+            }];
+            
+            this.villageOptions = [{
+                value: '选项1',
+                label: '全部村'
+            }, {
+                value: '选项2',
+                label: '龙凤村'
+            }];
+            
+            axios.get('/api/get_country').then(function (response) {
+                console.log(response);
+                
+            }).catch(function (err) {
+                console.log(err)
+            });
+        },
+        
+        getBuyList() {
+            console.log(this.search)
+             this.tableData = [{
                 num: '20170612000',
                 product: '黄豆',
                 number: '9',
@@ -186,43 +251,71 @@ export default {
                 money: '457.00',
                 farmer: '陈达',
                 date: '2017-6-12',
-            }, {
-               num: '20170612000',
-                product: '菜干',
-                number: '10',
-                money: '457.00',
-                farmer: '陈达',
-                date: '2017-6-12',
-            }, {
-                num: '20170612000',
-                product: '黑豆',
-                number: '3',
-                money: '457.00',
-                farmer: '陈达',
-                date: '2017-6-12',
-            }],
+            }];
             
-            editActive: null,
+            this.pagination.total = 30;
             
-            changeDate: '',
-            changeNumber: '',
-        }
-    },
-    
-    methods: {
-        handleCurrentChange() {
-            
-        },
-        handleDelete() {
-            
-        },
-        handleIconClick() {
-            
+            axios.get('/api/get_buy_list').then(function (response) {
+                console.log(response);
+                
+            }).catch(function (err) {
+                console.log(err)
+            });
         },
         
+        // 筛选县触发回调
+        handleCountryChange(value) {
+            this.search.country = value;
+            this.getBuyList();
+        },
+        // 筛选村触发回调
+        handleVillageChange(value) {
+            this.search.village = value;
+            this.getBuyList();
+        },
+        
+        // 搜索关键词触发回调
+        handleBuyChange(value) {
+            this.search.buy = value;
+        },
+        // 确认搜索触发回调
+        handleIconClick() {
+            this.getBuyList();
+        },
+        
+        // 选择页码触发回调
+        handleCurrentChange(page) {
+            this.search.page = page;
+            
+            this.getBuyList();
+        },
+        
+        // 删除单条收购记录
+        handleDelete(index, row) {
+            this.$confirm('此操作将永久删除该条记录, 确定要删除吗?', '提示', {
+              confirmButtonText: '确定',
+              cancelButtonText: '取消',
+              type: 'warning'
+            }).then(() => {
+                axios.post('/api/delet_buy_list', {id: index}).then(function (response) {
+                    this.$message({
+                        type: 'success',
+                        message: '删除成功!'
+                    });
+                }.bind(this)).catch(function (err) {
+                    console.log(err)
+                });
+              
+            }).catch(() => {
+                     
+            });
+        },
+        
+        // 编辑时日期选择回调
         changeDateFn(value) {
             this.changeDate = value;
         },
+        
         
         handleEdit(index, row) {
             // 编辑之前先清空保存日期和数量的变量
@@ -231,6 +324,7 @@ export default {
             
             this.editActive = index;
         },
+        // 完成编辑
         handleEditSuccess(index, row) {
             this.editActive = null;
             console.log(this.changeDate ,this.changeNumber)

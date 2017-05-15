@@ -1,12 +1,20 @@
 <template>
-    <div class="bg-white" style="height: calc(100vh - 64px);">
+    <div>
         <div class="page-comon-header">
             <div class="left">
                 <label class="font14 margin-r-5">筛选</label>
-                <el-cascader
-                    :options="options"
-                    :show-all-levels="false">
-                </el-cascader>
+                <el-select
+                    v-model="search.country"
+                    clearable
+                    @change="handleSelectChange"
+                    placeholder="请选择">
+                    <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
             </div>
             <div class="right">
                 <div class="right-item text-center">
@@ -22,13 +30,15 @@
                 <el-input
                     placeholder="输入关键词"
                     icon="search"
-                    v-model="input2"
+                    v-model="search.village"
+                    @change="handleVillageChange"
                     :on-icon-click="handleIconClick">
                 </el-input>
             </div>
             <div class="right">
-                <el-badge :value="10" :max="99" class="margin-r-15">
+                <el-badge :value="0" :max="99" class="margin-r-15">
                     <el-button
+                        disabled
                         :plain="true"
                         type="danger"
                         @click="handleDelete">批量删除</el-button>
@@ -47,6 +57,7 @@
             :data="tableData" stripe style="width: 100%">
             <el-table-column
                 type="selection"
+                align="center"
                 width="55">
             </el-table-column>
             <el-table-column
@@ -84,84 +95,130 @@
                 </template>
             </el-table-column>
         </el-table>
-        <div class="pagination-bar" style="margin-top: 15px;">
+        <div class="pagination-bar margin-t-15" v-show="pagination.total > 10">
           <el-pagination
             @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :page-size="pageSize"
+            :current-page="pagination.currentPage"
+            :page-size="pagination.pageSize"
             layout="total, prev, pager, next"
-            :total="total">
+            :total="pagination.total">
           </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            input2: '',
+            
+            // 搜索字段
+            search: {
+                country: '',
+                village: '',
+                page: 1,
+            },
+            
             // 是否加载中
             loading: false,
-            // 当前页数
-            currentPage: 1,
-            // 每页显示条数
-            pageSize: 10,
-            // 总条数
-            total: 40,
             
-            options: [{
-                value: 'guangxi',
-                label: '广西'
-            },{
-                value: 'shanghai',
-                label: '上海'
-            },{
-                value: 'shenzhen',
-                label: '深圳'
-            },{
-                value: 'guangdong',
-                label: '广东'}],
+            // 选择县列表
+            options: [],
+            
             // 表格数据
-            tableData: [{
-                name: '王小虎',
-                county: '天峨县',
-                people: '457',
-                action: ''
-            }, {
-                name: '王小虎',
-                county: '天峨县',
-                people: '457',
-                action: ''
-            }, {
-               name: '王小虎',
-                county: '天峨县',
-                people: '457',
-                action: ''
-            }, {
-                name: '王小虎',
-                county: '天峨县',
-                people: '457',
-                action: ''
-            }],
+            tableData: [],
+            
+            // 分页器数据
+            pagination: {
+                currentPage: 1,
+                pageSize: 10,
+                total: 0,
+            },
         }
     },
     
+    created() {
+        this.getCountryData();
+        this.getFarmerList();
+    },
+    
     methods: {
-        handleCurrentChange() {
-            
+        getCountryData() {
+            this.options = [{
+                value: '选项1',
+                label: '全部县'
+            }, {
+                value: '选项2',
+                label: '双皮奶'
+            }]; 
+            axios.get('/api/get_country').then(function (response) {
+                console.log(response);
+                this.options = response.data;
+            }).catch(function (err) {
+                console.log(err)
+            });;
         },
-        handleDelete() {
+        
+        getFarmerList() {
+            this.tableData = [{
+                id: '1',
+                name: '王小虎',
+                county: '天峨县',
+                people: '457',
+                action: ''
+            }, {
+                id: '2',
+                name: '王小虎',
+                county: '天峨县',
+                people: '457',
+                action: ''
+            }];
             
-        },
-        handleIconClick() {
+            this.pagination.total = 29;
             
+            axios.get('/api/get_farmer_list').then(function (response) {
+                console.log(response);
+                this.options = response.data;
+            }).catch(function (err) {
+                console.log(err)
+            });;
         },
+        
+        handleSelectChange(value) {
+            this.search.country = value;
+            console.log(this.search)
+            this.getFarmerList();
+        },
+        
+        handleCurrentChange(page) {
+            this.pagination.currentPage = page;
+            this.search.page = page;
+            console.log(this.search)
+            this.getFarmerList();
+        },
+        
+        handleDelete(index, row) {
+            axios.post('/api/delet_farmer', {id: row.id}).then(function (response) {
+                console.log(response.data)
+            }).catch(function (err) {
+                console.log(err)
+            });
+        },
+        
+        handleVillageChange(value) {
+            this.search.village = value;
+            console.log(this.search)
+        },
+        
+        handleIconClick(e) {
+            this.getFarmerList();
+        },
+        
         handleDetail(index, row) {
             this.$router.push('/village/detail')
         },
         handleEdit(index, row) {
-//          this.$router.push({ path: '/village/edit', query: row });
             this.$router.push({ name: '/village/edit', params: row });
         }
     }

@@ -3,10 +3,30 @@
         <div class="page-comon-header">
             <div class="left">
                 <label class="font14 margin-r-5">筛选</label>
-                <el-cascader
-                    :options="options"
-                    :show-all-levels="false">
-                </el-cascader>
+                <el-select
+                    v-model="search.country"
+                    clearable
+                    @change="handleCountryChange"
+                    placeholder="请选择">
+                    <el-option
+                        v-for="item in countryOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-select
+                    v-model="search.village"
+                    clearable
+                    @change="handleVillageChange"
+                    placeholder="请选择">
+                    <el-option
+                        v-for="item in villageOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                    </el-option>
+                </el-select>
             </div>
             <div class="right">
                 <div class="right-item text-center">
@@ -24,7 +44,8 @@
                         style="width: 160px; display: block; margin-top: 5px;"
                         placeholder="输入关键词"
                         icon="search"
-                        v-model="input2"
+                        v-model="search.buy"
+                        @change="handleBuyChange"
                         :on-icon-click="handleIconClick">
                     </el-input>
                 </div>
@@ -32,8 +53,9 @@
                     <label class="font14 txt-info">按时间段搜索:</label>
                     <el-date-picker
                         style="display: block; margin-top: 5px;"
-                        v-model="searchDate"
+                        v-model="search.dateTime"
                         type="daterange"
+                        @change="handleDateTimeChange"
                         placeholder="选择日期范围">
                     </el-date-picker>
                 </div>
@@ -82,51 +104,89 @@
             </el-table-column>
             
         </el-table>
-        <div class="pagination-bar" style="margin-top: 15px;">
+        <div class="pagination-bar margin-t-15" v-if="pagination.total > 10">
           <el-pagination
             @current-change="handleCurrentChange"
-            :current-page="currentPage"
-            :page-size="pageSize"
+            :current-page="pagination.currentPage"
+            :page-size="pagination.pageSize"
             layout="total, prev, pager, next"
-            :total="total">
+            :total="pagination.total">
           </el-pagination>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            input2: '',
+            // 搜索字段
+            search: {
+                country: '',
+                village: '',
+                buy: '',
+                dateTime: '',
+                page: 1,
+            },
+            
             // 是否加载中
             loading: false,
-            // 当前页数
-            currentPage: 1,
-            // 每页显示条数
-            pageSize: 10,
-            // 总条数
-            total: 40,
+            
             // 表格数据
             tableData: [],
+            // 分页器数据
+            pagination: {
+                currentPage: 1,
+                pageSize: 10,
+                total: 0,
+            },
             
-            searchDate: '',
+            // 保存县和村的列表数据
+            countryOptions: [],
+            villageOptions: [],
+            
+            
             preview: [],
             
-            options: [{
-                value: 'guangxi',
-                label: '广西'
-            },{
-                value: 'shanghai',
-                label: '上海'
-            },{
-                value: 'shenzhen',
-                label: '深圳'
-            },{
-                value: 'guangdong',
-                label: '广东'}],
-
-            tableData: [{
+        }
+    },
+    
+    created() {
+        this.getCountryData();
+        this.getData();
+    },
+    
+    methods: {
+        getCountryData() {
+            this.countryOptions = [{
+                value: '选项1',
+                label: '全部县'
+            }, {
+                value: '选项2',
+                label: '天峨县'
+            }];
+            
+            this.villageOptions = [{
+                value: '选项1',
+                label: '全部村'
+            }, {
+                value: '选项2',
+                label: '龙凤村'
+            }];
+            
+            axios.get('/api/get_country').then(function (response) {
+                console.log(response);
+                
+            }).catch(function (err) {
+                console.log(err)
+            });
+        },
+        
+        // 获取数据方法
+        getData() {
+            console.log(this.search)
+            this.tableData = [{
                 numb: '201706091234',
                 product: '黄豆',
                 number: '23斤',
@@ -140,20 +200,48 @@ export default {
                 money: '130.00',
                 farmer: '陈达',
                 date: '2017-6-1',
-            }],
-        }
-    },
-    
-    methods: {
-        handleCurrentChange() {
+            }];
             
+            this.pagination.total = 20;
+            
+            axios.post('/api/get_buy_list', this.search).then(response => {
+                console.log(response)
+            }).catch(err => {
+                console.log(err)
+            });
         },
+        
+        // 筛选县触发回调
+        handleCountryChange(value) {
+            this.search.country = value;
+            this.getData();
+        },
+        // 筛选村触发回调
+        handleVillageChange(value) {
+            this.search.village = value;
+            this.getData();
+        },
+        
+        handleCurrentChange(page) {
+            this.search.page = page;
+            this.getData();
+        },
+        
         handlePreview() {
             this.$router.push({
                 path: '/qrcode/preview'
             });
         },
+        handleBuyChange(value) {
+            this.search.buy = value;
+        },
         handleIconClick() {
+            this.getData();
+        },
+        
+        handleDateTimeChange(value) {
+//          this.search.dateTime = value;
+            this.getData();
             
         },
         

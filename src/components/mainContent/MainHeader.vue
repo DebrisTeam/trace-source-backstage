@@ -14,6 +14,7 @@
                 <div class="margin-r-15">
                     <el-input
                       size="small"
+                      disabled
                       placeholder="请输入内容"
                       icon="search"
                       :on-icon-click="handleIconClick">
